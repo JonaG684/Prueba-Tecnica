@@ -3,6 +3,7 @@ import { Box, TextField, Button, Typography, CircularProgress } from "@mui/mater
 import { useNavigate } from "react-router-dom";
 import { createProject } from "../services/api";
 import useAuth from "../hooks/useAuth";
+import BackButton from "./BackButton";
 
 const CreateProject: React.FC = () => {
   useAuth();
@@ -39,6 +40,7 @@ const CreateProject: React.FC = () => {
         mt: 10,
       }}
     >
+      <BackButton />
       <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold", color: "#333" }}>
         Create Project
       </Typography>

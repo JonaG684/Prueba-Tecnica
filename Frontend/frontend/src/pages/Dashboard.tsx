@@ -20,11 +20,12 @@ import {
   deleteProject,
   getProjectProgress,
 } from "../services/api";
-import useAuth from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
-  useAuth();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<any[]>([]);
   const [subscriptionStatus, setSubscriptionStatus] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -67,6 +68,11 @@ const Dashboard: React.FC = () => {
     } catch (err) {
       console.error("Error searching users:", err);
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   const handleInvite = async (userId: number) => {
@@ -112,6 +118,12 @@ const Dashboard: React.FC = () => {
         Dashboard
       </Typography>
 
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 4 }}>
+        <Button variant="outlined" color="error" onClick={handleLogout}>
+          Logout
+        </Button>
+      </Box>
+
       <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mb: 4 }}>
         <Button
           component={Link}
@@ -128,7 +140,9 @@ const Dashboard: React.FC = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              backgroundColor: subscriptionStatus.is_subscribed ? "#e8f5e9" : "#ffebee",
+              backgroundColor: subscriptionStatus.is_subscribed
+                ? "#e8f5e9"
+                : "#ffebee",
               padding: 1.5,
               borderRadius: 1,
               boxShadow: 1,
@@ -151,14 +165,17 @@ const Dashboard: React.FC = () => {
             to="/create-project"
             variant="contained"
             color="primary"
-            fullWidth
+            sx={{
+              padding: "8px 16px",
+              fontSize: "0.875rem",
+              textTransform: "none",
+            }}
           >
             Create New Project
           </Button>
         </Box>
       )}
 
-      
       <Grid container spacing={2}>
         {projects.map((project: any) => (
           <Grid item xs={12} sm={6} md={4} key={project.id}>
@@ -178,7 +195,11 @@ const Dashboard: React.FC = () => {
               <Typography variant="body2" sx={{ mb: 2 }}>
                 {project.description}
               </Typography>
-              <LinearProgress variant="determinate" value={project.progress || 0} sx={{ width: "100%", mb: 2 }} />
+              <LinearProgress
+                variant="determinate"
+                value={project.progress || 0}
+                sx={{ width: "100%", mb: 2 }}
+              />
               <Link
                 to={`/projects/${project.id}/tasks`}
                 style={{ textDecoration: "none", marginBottom: "8px" }}
@@ -217,7 +238,6 @@ const Dashboard: React.FC = () => {
         ))}
       </Grid>
 
-
       <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <Box
           sx={{
@@ -244,7 +264,10 @@ const Dashboard: React.FC = () => {
           </Button>
           <List>
             {searchResults.map((user) => (
-              <ListItem key={user.id} sx={{ display: "flex", justifyContent: "space-between" }}>
+              <ListItem
+                key={user.id}
+                sx={{ display: "flex", justifyContent: "space-between" }}
+              >
                 <ListItemText primary={user.username} secondary={user.email} />
                 <Button
                   variant="contained"

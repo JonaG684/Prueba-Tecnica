@@ -27,7 +27,7 @@ const Register: React.FC = () => {
     try {
       await registerUser({ username, email, password });
       alert('Registration successful! Please log in.');
-      navigate('/');
+      navigate('/login');
     } catch (err: any) {
       if (Array.isArray(err.response?.data?.detail)) {
         const errorMessages = err.response.data.detail.map((d: any) => d.msg).join(', ');
@@ -47,12 +47,12 @@ const Register: React.FC = () => {
   ) => {
     const { value } = e.target;
 
-    // Actualiza el estado del campo correspondiente
+    
     if (field === 'username') setUsername(value);
     if (field === 'email') setEmail(value);
     if (field === 'password') setPassword(value);
 
-    // Validación en tiempo real
+    
     const error = validateSingleField(field, value);
     setValidationErrors((prev) => ({ ...prev, [field]: error }));
   };

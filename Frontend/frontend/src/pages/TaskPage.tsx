@@ -16,6 +16,7 @@ import {
 import { getTasksByProject, createTask, updateTask, deleteTask, getSubscriptionStatus } from "../services/api";
 import { useParams } from "react-router-dom";
 import { Delete as DeleteIcon } from "@mui/icons-material";
+import BackButton from "./BackButton";
 
 const Tasks: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -106,11 +107,11 @@ const Tasks: React.FC = () => {
 
   return (
     <Box sx={{ maxWidth: 800, margin: "0 auto", padding: 3 }}>
+      <BackButton />
       <Typography variant="h4" sx={{ mb: 4, textAlign: "center" }}>
         Manage Tasks
       </Typography>
 
-      {/* Form to add a task */}
       <Paper sx={{ padding: 3, backgroundColor: "#f9f9f9", borderRadius: 2, boxShadow: 1, mb: 4 }}>
         <Typography variant="h6" sx={{ mb: 2 }}>
           Add a New Task

@@ -11,6 +11,7 @@ import {
   Grid,
   Alert,
 } from "@mui/material";
+import BackButton from "./BackButton";
 import { subscribe, unsubscribe, getSubscriptionStatus } from "../services/api";
 import useAuth from "../hooks/useAuth";
 
@@ -80,7 +81,8 @@ const Subscription: React.FC = () => {
         borderRadius: 2,
         boxShadow: 3,
       }}
-    >
+    > 
+      <BackButton />
       <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold", color: "#333" }}>
         Subscription Management
       </Typography>

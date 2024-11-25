@@ -6,12 +6,14 @@ import Register from './pages/Register';
 import CreateProject from './pages/CreateProjects';
 import Tasks from './pages/TaskPage';
 import Subscription from './pages/Subscription';
+import Home from "./pages/Home";
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-project" element={<CreateProject />} />
